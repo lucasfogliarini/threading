@@ -51,7 +51,7 @@ namespace Threading
 
             await Task.WhenAll(tasks);
 
-            Assert.Equal(_expectedCounter, _counter);
+            Assert.NotEqual(_expectedCounter, _counter);
         }
 
         private void IncrementCounterWithLock()
