@@ -1,10 +1,7 @@
-﻿using Microsoft.VisualStudio.TestPlatform.PlatformAbstractions.Interfaces;
-using System.Diagnostics;
+﻿using System.Diagnostics;
+
 namespace Threading
 {
-    /// <summary>
-    /// WIP
-    /// </summary>
     public class ThreadPoolTests
     {
         [Theory]
@@ -40,6 +37,19 @@ namespace Threading
 
             // Verifica se o tempo não é excessivamente alto (ajustar o valor conforme o ambiente)
             Assert.Equal(expectedExecutionSecs, stopwatch.Elapsed.Seconds);
+        }
+
+        [Fact]
+        public async Task CurrentManagedThreadId()
+        {
+            var principalThreadId = Environment.CurrentManagedThreadId;
+            for (int i = 0; i < 5000; i++)
+            {
+                Task.Run(async () =>
+                {
+                    Assert.NotEqual(principalThreadId, Environment.CurrentManagedThreadId);
+                });
+            }
         }
     }
 }
